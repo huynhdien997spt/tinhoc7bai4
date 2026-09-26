@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài 4 · Mạng xã hội và các kênh trao đổi thông tin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F7F6;
+  --card:#FFFFFF;
+  --ink:#152A2E;
+  --ink-soft:#4B6062;
+  --line:#DCE8E6;
+  --teal:#1B6E75;
+  --teal-dark:#0E4D53;
+  --teal-pale:#DEF0EE;
+  --coral:#FF7A50;
+  --coral-dark:#DD5C33;
+  --indigo:#4A5FD8;
+  --success:#2F9E44;
+  --success-pale:#E6F6E9;
+  --warn:#E8590C;
+  --warn-pale:#FFF1E6;
+  --danger:#E03131;
+  --danger-pale:#FDECEC;
+  --radius:18px;
+  --shadow:0 10px 24px rgba(14,77,83,.10);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Be Vietnam Pro',system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Baloo 2',system-ui,sans-serif;margin:0 0 .4em;line-height:1.25;color:var(--teal-dark)}
+h1{font-size:1.7rem}
+h2{font-size:1.4rem}
+h3{font-size:1.15rem}
+p{margin:.3em 0}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:2px}
+img{max-width:100%}
+.hidden{display:none !important}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+/* ---------- HEADER ---------- */
+#appHeader{
+  position:sticky;top:0;z-index:40;
+  background:linear-gradient(120deg,var(--teal-dark),var(--teal));
+  color:#fff;
+  padding:10px 18px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.12);
+}
+#appHeader .lesson-tag{font-family:'Baloo 2';font-weight:700;font-size:1.05rem;white-space:nowrap}
+#appHeader .who{font-size:.85rem;opacity:.92;white-space:nowrap}
+#appHeader .grow{flex:1;min-width:120px}
+#appHeader .progress-shell{background:rgba(255,255,255,.25);border-radius:20px;height:10px;overflow:hidden}
+#appHeader .progress-fill{background:var(--coral);height:100%;border-radius:20px;transition:width .4s ease}
+#appHeader .xp-chip{background:rgba(255,255,255,.18);border-radius:20px;padding:4px 12px;font-weight:600;font-size:.85rem;white-space:nowrap}
+#changeStudentBtn{
+  background:#fff;color:var(--teal-dark);border:none;border-radius:20px;
+  padding:8px 14px;font-weight:700;font-size:.85rem;white-space:nowrap;
+}
+#demoBadge{background:#FFD43B;color:#7A5900;border-radius:20px;padding:4px 12px;font-weight:700;font-size:.78rem}
+
+/* ---------- SCREENS ---------- */
+.screen{padding:28px 0 60px}
+.screen-inner{max-width:900px;margin:0 auto;padding:0 20px}
+
+/* ---------- CARDS ---------- */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 24px;box-shadow:var(--shadow);margin-bottom:18px;
+}
+.card.tight{padding:16px 18px}
+.pill{display:inline-block;background:var(--teal-pale);color:var(--teal-dark);border-radius:20px;padding:4px 14px;font-weight:600;font-size:.82rem;margin-bottom:10px}
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border:none;border-radius:14px;
+  padding:12px 22px;font-weight:700;font-size:1rem;transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--coral);color:#fff;box-shadow:0 6px 16px rgba(255,122,80,.35)}
+.btn-primary:hover{background:var(--coral-dark)}
+.btn-secondary{background:var(--teal-pale);color:var(--teal-dark)}
+.btn-secondary:hover{background:#cdece7}
+.btn-ghost{background:transparent;color:var(--teal-dark);border:2px solid var(--teal-pale)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-block{width:100%;justify-content:center}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+/* ---------- LOGIN ---------- */
+.hero-login{text-align:center;padding:10px 0 6px}
+.hero-login .big-emoji{font-size:3rem}
+.class-grid,.student-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:14px 0}
+.choice-card{
+  background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;
+  font-weight:600;color:var(--ink);
+}
+.choice-card:hover{border-color:var(--teal)}
+.choice-card.selected{border-color:var(--coral);background:var(--warn-pale)}
+.resume-banner{background:var(--teal-pale);border-radius:16px;padding:16px 18px;margin:14px 0;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.resume-banner .txt{flex:1;min-width:220px}
+
+/* ---------- SECTION NAV DOTS ---------- */
+.sec-progress{display:flex;gap:6px;justify-content:center;margin:14px 0}
+.sec-dot{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.sec-dot.done{background:var(--success)}
+.sec-dot.now{background:var(--coral)}
+
+/* ---------- ICON ROW ---------- */
+.icon-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:16px 0;font-size:2.2rem}
+.icon-row .lbl{font-size:.8rem;display:block;color:var(--ink-soft);margin-top:4px;text-align:center}
+.arrow-down{text-align:center;font-size:1.6rem;color:var(--teal);margin:6px 0}
+
+/* ---------- DRAG/CLICK SORT ---------- */
+.dnd-source{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0;min-height:52px}
+.dnd-chip{
+  background:#fff;border:2px solid var(--teal);color:var(--teal-dark);border-radius:12px;
+  padding:10px 16px;font-weight:600;cursor:grab;
+}
+.dnd-chip.selected{background:var(--teal);color:#fff}
+.dnd-chip.placed{opacity:.35;cursor:default}
+.dnd-zones{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media (max-width:560px){.dnd-zones{grid-template-columns:1fr}}
+.dnd-zone{
+  border:2px dashed var(--line);border-radius:14px;padding:14px;min-height:110px;background:#FBFEFD;
+}
+.dnd-zone h4{margin-bottom:8px;color:var(--ink-soft);font-family:'Be Vietnam Pro';font-weight:700}
+.dnd-zone.drag-over{border-color:var(--coral);background:var(--warn-pale)}
+.dnd-zone .placed-chip{display:inline-block;background:var(--success-pale);color:#1c6c30;border-radius:10px;padding:6px 12px;margin:3px;font-weight:600;font-size:.9rem}
+
+/* ---------- CHECKBOX / MULTI CHOICE ---------- */
+.option-list{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.option-item{
+  display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);border-radius:14px;
+  padding:12px 16px;font-weight:600;
+}
+.option-item:hover{border-color:var(--teal)}
+.option-item.chosen{border-color:var(--teal);background:var(--teal-pale)}
+.option-item.correct{border-color:var(--success);background:var(--success-pale)}
+.option-item.incorrect{border-color:var(--danger);background:var(--danger-pale)}
+.option-item .chk{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);flex:0 0 auto}
+.option-item.chosen .chk{background:var(--teal);border-color:var(--teal)}
+
+/* ---------- FEEDBACK ---------- */
+.feedback{border-radius:14px;padding:12px 16px;margin-top:10px;font-weight:600;display:none}
+.feedback.show{display:block}
+.feedback.good{background:var(--success-pale);color:#1c6c30}
+.feedback.bad{background:var(--warn-pale);color:#8a4400}
+
+/* ---------- MXH MOCKUP ---------- */
+.mxh-mock{border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;margin:14px 0}
+.mxh-mock .mxh-top{background:var(--teal);color:#fff;padding:10px 14px;font-weight:700;font-family:'Baloo 2'}
+.mxh-mock .mxh-body{padding:14px;display:grid;grid-template-columns:1fr 2fr;gap:14px}
+@media (max-width:560px){.mxh-mock .mxh-body{grid-template-columns:1fr}}
+.mxh-mock .mxh-side div{padding:8px 0;font-weight:600;color:var(--ink-soft)}
+.mxh-post{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.mxh-post .reacts{display:flex;gap:14px;margin-top:8px;color:var(--ink-soft);font-size:.9rem}
+
+/* ---------- MATCH GAME ---------- */
+.match-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.match-row select{padding:8px 10px;border-radius:10px;border:2px solid var(--line);font-family:inherit}
+
+/* ---------- STOP THINK ACT ---------- */
+.stla{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0}
+.stla span{background:var(--teal-pale);border-radius:12px;padding:8px 14px;font-weight:700;color:var(--teal-dark);font-size:.9rem}
+
+/* ---------- SOCIAL LAB ---------- */
+.lab-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.lab-tab{background:var(--teal-pale);color:var(--teal-dark);border:none;border-radius:20px;padding:8px 16px;font-weight:700}
+.lab-tab.active{background:var(--teal);color:#fff}
+.lab-panel{display:none}
+.lab-panel.active{display:block}
+textarea, input[type=text]{
+  width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;font-family:inherit;font-size:1rem;
+}
+.avatar-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.avatar-choice{font-size:2rem;background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px 12px}
+.avatar-choice.selected{border-color:var(--coral);background:var(--warn-pale)}
+.charcount{font-size:.8rem;color:var(--ink-soft);text-align:right}
+
+/* ---------- MINDMAP ---------- */
+.mindmap-tree{display:flex;flex-direction:column;align-items:center;gap:10px;margin:14px 0}
+.mm-center{background:var(--teal);color:#fff;border-radius:16px;padding:12px 20px;font-weight:700;text-align:center;font-family:'Baloo 2'}
+.mm-branches{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.mm-branch{background:var(--teal-pale);border-radius:14px;padding:10px 14px;min-width:170px}
+.mm-branch b{color:var(--teal-dark)}
+.mm-branch ul{margin:6px 0 0;padding-left:18px}
+
+/* ---------- TEACHER ---------- */
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}
+th{color:var(--ink-soft);font-weight:700}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar-row .lbl{width:70px;font-weight:700}
+.bar-shell{flex:1;background:var(--teal-pale);border-radius:10px;height:16px;overflow:hidden}
+.bar-fill{background:var(--coral);height:100%}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:14px 0}
+.stat-box{background:var(--teal-pale);border-radius:14px;padding:14px;text-align:center}
+.stat-box .num{font-family:'Baloo 2';font-size:1.6rem;color:var(--teal-dark);font-weight:800}
+
+/* ---------- MODAL ---------- */
+.modal-back{
+  position:fixed;inset:0;background:rgba(10,30,32,.55);display:none;align-items:center;justify-content:center;
+  padding:20px;z-index:100;
+}
+.modal-back.show{display:flex}
+.modal-box{background:#fff;border-radius:20px;padding:24px;max-width:480px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.save-status{position:fixed;bottom:16px;right:16px;background:#fff;border:1px solid var(--line);border-radius:20px;
+  padding:8px 16px;font-size:.85rem;font-weight:600;box-shadow:var(--shadow);z-index:50;color:var(--ink-soft)}
+.save-status.err{color:var(--danger)}
+footer.refs{margin-top:26px;font-size:.9rem;color:var(--ink-soft)}
+footer.refs a{color:var(--indigo)}
+.link-list{list-style:none;padding:0;margin:8px 0}
+.link-list li{margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div id="appHeader">
+  <span class="lesson-tag">📘 Bài 4</span>
+  <span class="who" id="hdrWho">Chưa đăng nhập</span>
+  <div class="grow">
+    <div class="progress-shell"><div class="progress-fill" id="hdrProgressFill" style="width:0%"></div></div>
+  </div>
+  <span class="xp-chip" id="hdrXp">⭐ 0 XP</span>
+  <span id="demoBadge" class="hidden">🟡 DEMO MODE</span>
+  <button id="changeStudentBtn" class="hidden">🔄 Đổi học sinh</button>
+</div>
+
+<div id="saveStatus" class="save-status hidden"></div>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<section id="screen-login" class="screen">
+  <div class="screen-inner">
+    <div class="hero-login">
+      <div class="big-emoji">🌐📱💬</div>
+      <h1>Mạng xã hội và một số kênh trao đổi thông tin trên Internet</h1>
+      <p>Chọn lớp và tên của em để bắt đầu bài học nhé!</p>
+    </div>
+
+    <div id="resumeBanner" class="resume-banner hidden">
+      <div class="txt" id="resumeText"></div>
+      <button class="btn btn-primary" id="resumeBtn">👉 TIẾP TỤC HỌC</button>
+    </div>
+
+    <div class="card">
+      <div class="pill">Bước 1</div>
+      <h3>Chọn lớp của em</h3>
+      <div class="class-grid" id="classGrid"><p>Đang tải danh sách lớp…</p></div>
+    </div>
+
+    <div class="card hidden" id="studentPickCard">
+      <div class="pill">Bước 2</div>
+      <h3>Chọn tên của em</h3>
+      <div class="student-grid" id="studentGrid"></div>
+    </div>
+
+    <button class="btn btn-primary btn-block hidden" id="enterBtn">🚀 VÀO BÀI HỌC</button>
+
+    <p style="text-align:center;margin-top:22px">
+      <button class="btn btn-ghost" id="openTeacherModeBtn">👨‍🏫 TEACHER MODE</button>
+    </p>
+  </div>
+</section>
+
+<!-- ============ SECTION 1 ============ -->
+<section id="screen-section1" class="screen hidden">
+  <div class="screen-inner">
+    <div class="sec-progress" id="secDots1"></div>
+    <div class="card">
+      <div class="pill">PHẦN 1</div>
+      <h2>Kết nối Internet – Thông tin đi đâu?</h2>
+      <p><b>Trước khi có Internet, con người trao đổi thông tin bằng cách nào?</b></p>
+      <div class="icon-row">
+        <div>✉️<span class="lbl">Thư tay</span></div>
+        <div>☎️<span class="lbl">Điện thoại</span></div>
+        <div>📰<span class="lbl">Báo chí</span></div>
+        <div>📻<span class="lbl">Radio</span></div>
+      </div>
+      <div class="arrow-down">⬇️ Ngày nay chúng ta có thêm</div>
+      <div class="icon-row"><div style="font-size:2.6rem">🌐<span class="lbl">INTERNET</span></div></div>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Hoạt động: Kéo các kênh vào đúng vùng</h3>
+      <p>Chọn một thẻ, sau đó bấm vào vùng phù hợp để xếp thẻ đó vào (hoặc kéo–thả trực tiếp bằng chuột).</p>
+      <div class="dnd-source" id="dndSource"></div>
+      <div class="dnd-zones">
+        <div class="dnd-zone" id="zoneInternet" data-zone="internet"><h4>🌐 Trên Internet</h4><div class="placed" id="placedInternet"></div></div>
+        <div class="dnd-zone" id="zoneOffline" data-zone="offline"><h4>📮 Không qua Internet</h4><div class="placed" id="placedOffline"></div></div>
+      </div>
+      <div class="feedback" id="dndFeedback"></div>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Trên Internet, chúng ta có thể trao đổi những loại thông tin nào?</h3>
+      <p>(Chọn tất cả đáp án đúng)</p>
+      <div class="option-list" id="infoTypeList"></div>
+      <div class="feedback" id="infoTypeFeedback"></div>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="toSection2Btn" disabled>Tiếp tục ➜ Phần 2</button>
+  </div>
+</section>
+
+<!-- ============ SECTION 2 ============ -->
+<section id="screen-section2" class="screen hidden">
+  <div class="screen-inner">
+    <div class="sec-progress" id="secDots2"></div>
+    <div class="card">
+      <div class="pill">PHẦN 2</div>
+      <h2>Khám phá mạng xã hội</h2>
+      <p><b>Quan sát mô phỏng dưới đây. Theo em, đây có phải là mạng xã hội không? Vì sao?</b></p>
+      <div class="mxh-mock">
+        <div class="mxh-top">🌐 SocialLab – Bảng tin</div>
+        <div class="mxh-body">
+          <div class="mxh-side">
+            <div>👤 Hồ sơ cá nhân</div><div>👥 Bạn bè</div><div>✉️ Tin nhắn</div>
+          </div>
+          <div class="mxh-main">
+            <div class="mxh-post"><b>An</b> vừa chia sẻ một mẹo học Tin học 📷<div class="reacts"><span>❤️ 12</span><span>💬 Bình luận</span><span>↗️ Chia sẻ</span></div></div>
+            <div class="mxh-post"><b>Minh</b> đăng video 🎬 hướng dẫn vẽ<div class="reacts"><span>❤️ 20</span><span>💬 Bình luận</span><span>↗️ Chia sẻ</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="option-list" id="isSocialList"></div>
+      <div class="feedback" id="isSocialFeedback"></div>
+      <div class="card tight" style="background:var(--teal-pale);border:none;margin-top:14px">
+        <b>MẠNG XÃ HỘI = CỘNG ĐỒNG TRỰC TUYẾN + TƯƠNG TÁC + KẾT NỐI + CHIA SẺ</b>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎮 Trò chơi: Mạng xã hội nào dùng để làm gì?</h3>
+      <p>Ghép mỗi chức năng với ví dụ phù hợp nhất.</p>
+      <div id="matchGame"></div>
+      <button class="btn btn-secondary" id="checkMatchBtn">Kiểm tra</button>
+      <div class="feedback" id="matchFeedback"></div>
+    </div>
+
+    <div class="card">
+      <h3>🎮 Giải cứu tin nhắn</h3>
+      <p>Chọn kênh trao đổi phù hợp nhất cho mỗi tình huống. Mỗi câu đúng +5 XP.</p>
+      <div id="rescueGame"></div>
+    </div>
+
+    <div class="card hidden" id="checkpointCard">
+      <h3>✅ Checkpoint nhanh (3 câu)</h3>
+      <div id="checkpointBox"></div>
+    </div>
+
+    <div class="card hidden" id="endOfTiet1" style="text-align:center;background:var(--success-pale);border:none">
+      <h2>🎉 HOÀN THÀNH TIẾT 1!</h2>
+      <p>Tiến độ của em đã được lưu. Nếu học tiết sau vào ngày khác, em chỉ cần chọn lại lớp và tên — hệ thống sẽ đưa em trở lại đúng vị trí.</p>
+      <button class="btn btn-primary" id="toSection3Btn">Bắt đầu Tiết 2 ➜ Phần 3</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3 ============ -->
+<section id="screen-section3" class="screen hidden">
+  <div class="screen-inner">
+    <div class="sec-progress" id="secDots3"></div>
+    <div class="card">
+      <div class="pill">PHẦN 3</div>
+      <h2>🕵️ Thám tử mạng xã hội – Dùng mạng xã hội thông minh</h2>
+      <p>Quy trình xử lí mỗi tình huống:</p>
+      <div class="stla"><span>🛑 DỪNG</span><span>🔎 KIỂM TRA</span><span>🧠 SUY NGHĨ</span><span>✅ HÀNH ĐỘNG</span></div>
+    </div>
+    <div id="situationsBox"></div>
+    <button class="btn btn-primary btn-block hidden" id="toSection4Btn">Tiếp tục ➜ Phần 4</button>
+  </div>
+</section>
+
+<!-- ============ SECTION 4 ============ -->
+<section id="screen-section4" class="screen hidden">
+  <div class="screen-inner">
+    <div class="sec-progress" id="secDots4"></div>
+    <div class="card">
+      <div class="pill">PHẦN 4</div>
+      <h2>🧪 Social Lab – Mạng xã hội mô phỏng</h2>
+      <p>Đây là mạng xã hội <b>giả lập</b> chỉ chạy trong trình duyệt. Em <b>không</b> cần tài khoản thật, email thật hay số điện thoại thật.</p>
+      <div class="lab-tabs">
+        <button class="lab-tab active" data-tab="lab1">1. Hồ sơ</button>
+        <button class="lab-tab" data-tab="lab2">2. Bài đăng</button>
+        <button class="lab-tab" data-tab="lab3">3. Bình luận</button>
+        <button class="lab-tab" data-tab="lab4">4. Kết bạn</button>
+        <button class="lab-tab" data-tab="lab5">5. Chia sẻ?</button>
+      </div>
+
+      <div class="lab-panel active" id="lab1">
+        <h3>Tạo hồ sơ giả lập</h3>
+        <p>Chọn một avatar hoạt hình:</p>
+        <div class="avatar-row" id="avatarRow"></div>
+        <p>Tên hiển thị: <b id="labDisplayName">—</b></p>
+        <button class="btn btn-secondary" data-done="lab1">Xong, sang bước 2 ➜</button>
+      </div>
+
+      <div class="lab-panel" id="lab2">
+        <h3>Viết bài đăng ngắn</h3>
+        <p>Hãy chia sẻ <b>một mẹo học tập hữu ích</b> (tối đa 200 ký tự).</p>
+        <textarea id="postText" maxlength="200" rows="3" placeholder="Hôm nay mình học được rằng..."></textarea>
+        <div class="charcount"><span id="postCount">0</span>/200</div>
+        <button class="btn btn-primary" id="postSubmitBtn">📤 ĐĂNG</button>
+        <div id="postFeed" style="margin-top:12px"></div>
+      </div>
+
+      <div class="lab-panel" id="lab3">
+        <h3>Viết bình luận tích cực</h3>
+        <div class="mxh-post"><b>Nhân vật giả lập</b>: "Mình thấy môn Tin học rất khó 😥"</div>
+        <textarea id="commentText" rows="2" placeholder="Viết một bình luận tích cực và lịch sự..."></textarea>
+        <button class="btn btn-primary" id="commentSubmitBtn">Gửi bình luận</button>
+        <div class="feedback" id="commentFeedback"></div>
+      </div>
+
+      <div class="lab-panel" id="lab4">
+        <h3>Ai là người em có đủ thông tin để cân nhắc kết nối?</h3>
+        <div class="option-list" id="friendList"></div>
+        <div class="feedback" id="friendFeedback"></div>
+      </div>
+
+      <div class="lab-panel" id="lab5">
+        <h3>Chia sẻ hay không?</h3>
+        <div id="shareTasks"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🛡️ Người dùng Internet thông minh</h3>
+      <p>8 thử thách nhanh — <span id="miniProgress">0/8</span></p>
+      <div id="finalGame"></div>
+    </div>
+
+    <button class="btn btn-primary btn-block hidden" id="toSection5Btn">Tiếp tục ➜ Phần 5</button>
+  </div>
+</section>
+
+<!-- ============ SECTION 5 ============ -->
+<section id="screen-section5" class="screen hidden">
+  <div class="screen-inner">
+    <div class="sec-progress" id="secDots5"></div>
+    <div class="card">
+      <div class="pill">PHẦN 5</div>
+      <h2>📝 Exit Ticket – Tổng kết bài học</h2>
+
+      <h3>Câu 1. Kể tên 3 kênh trao đổi thông tin trên Internet</h3>
+      <input type="text" id="etQ1" placeholder="Ví dụ: email, diễn đàn, mạng xã hội...">
+
+      <h3>Câu 2. Mạng xã hội giúp người dùng thực hiện những việc nào?</h3>
+      <div class="option-list" id="etQ2List"></div>
+
+      <h3>Câu 3. Nếu gặp thông tin chưa rõ nguồn, em sẽ làm gì trước khi chia sẻ?</h3>
+      <div class="option-list" id="etQ3List"></div>
+
+      <h3>Câu 4. Sau bài học này, em hiểu bài ở mức nào?</h3>
+      <div class="option-list" id="etQ4List"></div>
+
+      <h3>Câu 5. Điều em còn thắc mắc hoặc muốn thầy giải thích thêm</h3>
+      <textarea id="etQ5" rows="2" placeholder="(có thể để trống)"></textarea>
+
+      <button class="btn btn-primary btn-block" id="submitExitBtn" style="margin-top:16px">Nộp Exit Ticket</button>
+    </div>
+
+    <div class="card hidden" id="mindmapCard">
+      <h3>🧠 Thử thách tự chọn — Vẽ sơ đồ tư duy</h3>
+      <p>Nếu còn thời gian hoặc muốn ghi nhớ bài tốt hơn, em có thể vẽ một sơ đồ tư duy tóm tắt Bài 4. Hoạt động này <b>không bắt buộc</b> và không ảnh hưởng đến kết quả hoàn thành bài học.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-secondary" id="viewMindmapBtn">🧠 XEM HƯỚNG DẪN VẼ MINDMAP</button>
+        <button class="btn btn-ghost" id="skipMindmapBtn">BỎ QUA ➜ HOÀN THÀNH</button>
+      </div>
+      <div id="mindmapGuide" class="hidden" style="margin-top:16px">
+        <div class="mindmap-tree">
+          <div class="mm-center">🌐 MẠNG XÃ HỘI<br>VÀ TRAO ĐỔI THÔNG TIN</div>
+          <div class="mm-branches">
+            <div class="mm-branch"><b>1. Kênh trao đổi</b><ul><li>Email</li><li>Diễn đàn</li><li>MXH</li></ul></div>
+            <div class="mm-branch"><b>2. Mạng xã hội</b><ul><li>Kết nối</li><li>Chia sẻ</li><li>Bình luận</li><li>Thảo luận</li></ul></div>
+            <div class="mm-branch"><b>3. Sử dụng thông minh</b><ul><li>Kiểm chứng</li><li>Lịch sự</li><li>Không bắt nạt</li><li>Cân nhắc trước khi chia sẻ</li></ul></div>
+          </div>
+        </div>
+        <p>Gợi ý: dùng từ khoá ngắn, thêm màu sắc và icon, hạn chế viết câu dài.</p>
+        <button class="btn btn-primary" id="doneMindmapBtn">Tôi đã vẽ xong / xem xong ➜ HOÀN THÀNH</button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="finalDoneCard" style="text-align:center;background:var(--success-pale);border:none">
+      <h2>🏆 Hoàn thành Bài 4!</h2>
+      <p id="finalSummary"></p>
+      <div id="badgeRow" style="font-size:2rem"></div>
+    </div>
+
+    <footer class="refs">
+      <h3>📚 Tìm hiểu thêm</h3>
+      <ul class="link-list">
+        <li><a href="https://www.unicef.org/vietnam" target="_blank" rel="noopener noreferrer">UNICEF Việt Nam</a> — Nguồn này giúp em tìm hiểu về quyền trẻ em và an toàn khi dùng Internet.</li>
+        <li><a href="https://safety.google/" target="_blank" rel="noopener noreferrer">Google Safety Center</a> — Nguồn này giúp em tìm hiểu cách bảo vệ thông tin cá nhân khi trực tuyến.</li>
+        <li><a href="https://www.facebook.com/help/" target="_blank" rel="noopener noreferrer">Trung tâm trợ giúp Facebook</a> — Nguồn này giúp em tìm hiểu chính sách và quy định an toàn của nền tảng.</li>
+      </ul>
+    </footer>
+  </div>
+</section>
+
+<!-- ============ FAST-COMPLETION WARNING MODAL ============ -->
+<div class="modal-back" id="fastModal">
+  <div class="modal-box">
+    <h3>⚡ Em hoàn thành rất nhanh!</h3>
+    <p>Em hãy dành thêm vài phút để:</p>
+    <ul>
+      <li>✓ xem lại các tình huống</li>
+      <li>✓ kiểm tra câu trả lời</li>
+      <li>✓ đọc phần giải thích</li>
+      <li>✓ chắc chắn rằng em thực sự hiểu bài</li>
+    </ul>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn btn-secondary" id="fastReviewBtn">🔍 XEM LẠI BÀI</button>
+      <button class="btn btn-primary" id="fastContinueBtn">TÔI ĐÃ KIỂM TRA ➜ TIẾP TỤC</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TEACHER MODE ============ -->
+<div class="modal-back" id="teacherLoginModal">
+  <div class="modal-box">
+    <h3>👨‍🏫 Teacher Mode</h3>
+    <p>Nhập mã giáo viên:</p>
+    <input type="text" id="teacherCodeInput" placeholder="Mã giáo viên">
+    <div class="feedback" id="teacherLoginFeedback"></div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="btn btn-primary" id="teacherLoginSubmit">Đăng nhập</button>
+      <button class="btn btn-ghost" id="teacherLoginCancel">Huỷ</button>
+    </div>
+  </div>
+</div>
+
+<section id="screen-teacher" class="screen hidden">
+  <div class="screen-inner">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <h2>👨‍🏫 Teacher Dashboard — Bài 4</h2>
+        <div>
+          <button class="btn btn-secondary" id="teacherRefreshBtn">🔄 Refresh</button>
+          <button class="btn btn-ghost" id="teacherExitBtn">Thoát</button>
+        </div>
+      </div>
+      <div class="match-row">
+        <label>🔎 Chọn lớp:</label>
+        <select id="teacherClassFilter"><option value="">Tất cả</option></select>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Danh sách học sinh</h3>
+      <div style="overflow-x:auto">
+        <table id="teacherTable">
+          <thead><tr><th>Họ tên</th><th>Lớp</th><th>Tiến độ</th><th>Thời gian</th><th>Điểm</th><th>XP</th><th>Hoàn thành</th><th></th></tr></thead>
+          <tbody id="teacherTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Phân tích Exit Ticket</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="statExitCount">0</div>Đã nộp Exit Ticket</div>
+        <div class="stat-box"><div class="num" id="statVerifyRate">0%</div>Trả lời đúng câu "kiểm tra nguồn"</div>
+        <div class="stat-box"><div class="num" id="statFast">0</div>Học sinh hoàn thành rất nhanh</div>
+      </div>
+      <h4>Phân bố mức độ hiểu bài</h4>
+      <div id="understandingBars"></div>
+      <h4>Câu hỏi học sinh còn thắc mắc</h4>
+      <div id="studentQuestions"></div>
+    </div>
+
+    <div class="card">
+      <h3>🗑️ Reset tiến độ học sinh</h3>
+      <div class="match-row">
+        <select id="resetStudentSelect"><option value="">-- Chọn học sinh --</option></select>
+        <button class="btn btn-danger" id="resetProgressBtn">Reset</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ================= CONFIG ================= */
+const CONFIG = {
+  lessonId: "TIN7_BAI4",
+  lessonName: "Bài 4. Mạng xã hội và một số kênh trao đổi thông tin trên Internet",
+  schoolYear: "2026-2027",
+  googleScriptUrl: "PASTE_YOUR_WEB_APP_URL_HERE",
+  teacherCode: "GV2026"
+};
+const DEMO_MODE = !CONFIG.googleScriptUrl || CONFIG.googleScriptUrl.indexOf("PASTE_") === 0;
+
+/* ================= STATE ================= */
+let STATE = {
+  studentId: null, hoTen: null, lop: null,
+  currentSection: 1, progress: 0, score: 0, xp: 0,
+  activeTimeSeconds: 0, completed: false, fastCompletion: false,
+  startTs: Date.now(), lastInteractionTs: Date.now(),
+  answers: {}
+};
+let TEACHER_AUTH = false;
+let labProfile = { avatar: null };
+
+/* ================= DEMO BACKEND (localStorage) ================= */
+const DemoDB = {
+  key(name){ return "demo_" + name; },
+  get(name, fallback){ try{ return JSON.parse(localStorage.getItem(this.key(name))) || fallback; }catch(e){ return fallback; } },
+  set(name, val){ localStorage.setItem(this.key(name), JSON.stringify(val)); },
+  ensureRoster(){
+    if(!localStorage.getItem(this.key("roster"))){
+      const roster = [
+        {StudentID:"HS001","Họ tên":"Nguyễn Văn An","Lớp":"7A1","Năm học":CONFIG.schoolYear,Active:true},
+        {StudentID:"HS002","Họ tên":"Trần Thị Bình","Lớp":"7A1","Năm học":CONFIG.schoolYear,Active:true},
+        {StudentID:"HS003","Họ tên":"Lê Văn Cường","Lớp":"7A1","Năm học":CONFIG.schoolYear,Active:true},
+        {StudentID:"HS004","Họ tên":"Phạm Thị Duyên","Lớp":"7A2","Năm học":CONFIG.schoolYear,Active:true},
+        {StudentID:"HS005","Họ tên":"Hoàng Văn Em","Lớp":"7A2","Năm học":CONFIG.schoolYear,Active:true}
+      ];
+      this.set("roster", roster);
+    }
+  }
+};
+DemoDB.ensureRoster();
+
+function demoStudentKey(){ return CONFIG.lessonId+"_"+CONFIG.schoolYear+"_"+STATE.studentId; }
+
+async function demoApi(action, p){
+  await new Promise(r=>setTimeout(r, 120));
+  const roster = DemoDB.get("roster", []);
+  switch(action){
+    case "getRoster": {
+      const classes = {};
+      roster.filter(s=>s.Active && s["Năm học"]===p.schoolYear).forEach(s=>{
+        const lop = s["Lớp"];
+        classes[lop] = classes[lop] || [];
+        classes[lop].push({studentId:s.StudentID, hoTen:s["Họ tên"]});
+      });
+      return {ok:true, data:classes};
+    }
+    case "login": {
+      const match = roster.find(s=>s.StudentID===p.studentId && s.Active && s["Năm học"]===p.schoolYear);
+      if(!match) return {ok:false, error:"Không tìm thấy học sinh."};
+      const students = DemoDB.get("students", {});
+      const key = p.lessonId+"_"+p.schoolYear+"_"+p.studentId;
+      if(!students[key]){
+        students[key] = {StudentKey:key, LessonID:p.lessonId, StudentID:p.studentId, HoTen:match["Họ tên"], Lop:match["Lớp"],
+          NamHoc:p.schoolYear, Progress:0, CurrentSection:1, Score:0, XP:0, ActiveTimeSeconds:0,
+          FastCompletion:false, Week1Completed:false, Completed:false};
+        DemoDB.set("students", students);
+      }
+      return {ok:true, data:students[key]};
+    }
+    case "saveProgress": {
+      const students = DemoDB.get("students", {});
+      const key = p.lessonId+"_"+p.schoolYear+"_"+p.studentId;
+      if(students[key]){
+        Object.assign(students[key], {Progress:p.progress, CurrentSection:p.currentSection, Score:p.score, XP:p.xp,
+          ActiveTimeSeconds:p.activeTimeSeconds, FastCompletion:p.fastCompletion, Completed:p.completed});
+        DemoDB.set("students", students);
+      }
+      return {ok:true, data:{}};
+    }
+    case "saveResponse": {
+      const responses = DemoDB.get("responses", []);
+      responses.push(Object.assign({Timestamp:new Date().toISOString()}, p));
+      DemoDB.set("responses", responses);
+      return {ok:true, data:{}};
+    }
+    case "saveExitTicket": {
+      const tickets = DemoDB.get("exitTickets", []);
+      tickets.push(Object.assign({SubmittedAt:new Date().toISOString()}, p));
+      DemoDB.set("exitTickets", tickets);
+      return {ok:true, data:{}};
+    }
+    case "teacherLogin": {
+      return p.code===CONFIG.teacherCode ? {ok:true,data:{}} : {ok:false,error:"Sai mã giáo viên."};
+    }
+    case "getTeacherDashboard": {
+      if(p.code!==CONFIG.teacherCode) return {ok:false,error:"Sai mã giáo viên."};
+      const students = Object.values(DemoDB.get("students", {})).filter(s=>s.LessonID===p.lessonId && (!p.lop || s.Lop===p.lop));
+      const tickets = DemoDB.get("exitTickets", []).filter(t=>t.lessonId===p.lessonId && (!p.lop || t.lop===p.lop));
+      const dist = {"1":0,"2":0,"3":0,"4":0,"5":0};
+      let verifyOk = 0; const questions=[];
+      tickets.forEach(t=>{
+        if(dist[String(t.understanding)]!==undefined) dist[String(t.understanding)]++;
+        if((t.verifyBeforeShare||"").toLowerCase().includes("kiểm tra") || (t.verifyBeforeShare||"").toLowerCase().includes("kiem tra")) verifyOk++;
+        if(t.question && t.question.trim()) questions.push({hoTen:t.hoTen, lop:t.lop, question:t.question});
+      });
+      const classes = [...new Set(students.map(s=>s.Lop))].sort();
+      return {ok:true, data:{students, classes, exitTicketCount:tickets.length, understandingDist:dist,
+        verifyCorrectRate: tickets.length?Math.round(100*verifyOk/tickets.length):0,
+        questions, fastCompletionCount: students.filter(s=>s.FastCompletion).length}};
+    }
+    case "resetStudentProgress": {
+      if(p.code!==CONFIG.teacherCode) return {ok:false,error:"Sai mã giáo viên."};
+      const students = DemoDB.get("students", {});
+      const key = p.lessonId+"_"+p.schoolYear+"_"+p.studentId;
+      if(students[key]) Object.assign(students[key], {Progress:0,CurrentSection:1,Score:0,XP:0,ActiveTimeSeconds:0,FastCompletion:false,Completed:false});
+      DemoDB.set("students", students);
+      return {ok:true, data:{}};
+    }
+    default: return {ok:false, error:"Không rõ action (demo): "+action};
+  }
+}
+
+/* ================= API LAYER ================= */
+async function callApi(action, payload){
+  payload = payload || {};
+  payload.action = action;
+  payload.lessonId = payload.lessonId || CONFIG.lessonId;
+  payload.schoolYear = payload.schoolYear || CONFIG.schoolYear;
+  if(DEMO_MODE) return demoApi(action, payload);
+  try{
+    const res = await fetch(CONFIG.googleScriptUrl, {
+      method: "POST",
+      headers: {"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify(payload)
+    });
+    return await res.json();
+  }catch(err){
+    return {ok:false, error:"Lỗi kết nối: "+err};
+  }
+}
+
+/* ================= SAVE STATUS UI ================= */
+function showSaveStatus(text, isErr){
+  const el = document.getElementById("saveStatus");
+  el.textContent = text; el.classList.remove("hidden"); el.classList.toggle("err", !!isErr);
+  clearTimeout(showSaveStatus._t);
+  showSaveStatus._t = setTimeout(()=>el.classList.add("hidden"), 2200);
+}
+
+async function autosave(extra){
+  showSaveStatus("☁️ Đang lưu...");
+  const res = await callApi("saveProgress", Object.assign({
+    studentId: STATE.studentId, progress: STATE.progress, currentSection: STATE.currentSection,
+    score: STATE.score, xp: STATE.xp, activeTimeSeconds: Math.round(STATE.activeTimeSeconds),
+    fastCompletion: STATE.fastCompletion, week1Completed: STATE.currentSection>=3, completed: STATE.completed
+  }, extra||{}));
+  if(res.ok) showSaveStatus("✓ Đã lưu");
+  else showSaveStatus("⚠️ Chưa đồng bộ được. Hệ thống sẽ thử lại.", true);
+}
+
+async function logResponse(activityId, section, question, answer, correct, attempts, score, xp){
+  await callApi("saveResponse", {
+    studentId: STATE.studentId, hoTen: STATE.hoTen, lop: STATE.lop,
+    activityId, section, question, answer, correct, attempts: attempts||1,
+    score: score||0, xp: xp||0, activeTimeSeconds: Math.round(STATE.activeTimeSeconds)
+  });
+}
+
+function addXp(n){ STATE.xp += n; updateHeader(); }
+function addScore(n){ STATE.score += n; }
+
+/* ================= ACTIVE TIME TRACKING ================= */
+["click","keydown","input","change","touchstart"].forEach(evt=>{
+  document.addEventListener(evt, ()=>{ STATE.lastInteractionTs = Date.now(); });
+});
+setInterval(()=>{
+  if(!STATE.studentId) return;
+  if(Date.now() - STATE.lastInteractionTs < 6000){ STATE.activeTimeSeconds += 5; updateHeader(); }
+}, 5000);
+
+/* ================= HEADER ================= */
+function updateHeader(){
+  document.getElementById("hdrWho").textContent = STATE.studentId ? `${STATE.hoTen} · ${STATE.lop}` : "Chưa đăng nhập";
+  document.getElementById("hdrProgressFill").style.width = STATE.progress + "%";
+  document.getElementById("hdrXp").textContent = "⭐ " + STATE.xp + " XP";
+  document.getElementById("changeStudentBtn").classList.toggle("hidden", !STATE.studentId);
+  document.getElementById("demoBadge").classList.toggle("hidden", !DEMO_MODE);
+}
+
+function setSectionDots(activeSection){
+  for(let s=1;s<=5;s++){
+    const el = document.getElementById("secDots"+s);
+    if(!el) continue;
+    el.innerHTML = "";
+    for(let i=1;i<=5;i++){
+      const d = document.createElement("span");
+      d.className = "sec-dot" + (i<activeSection?" done":"") + (i===activeSection?" now":"");
+      el.appendChild(d);
+    }
+  }
+}
+
+function progressForSection(sec){ return {1:0,2:25,3:50,4:75,5:100}[sec] || 0; }
+
+function showScreen(name){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.add("hidden"));
+  document.getElementById("screen-"+name).classList.remove("hidden");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function goToSection(n){
+  STATE.currentSection = n;
+  STATE.progress = Math.max(STATE.progress, progressForSection(n));
+  setSectionDots(n);
+  showScreen("section"+n);
+  updateHeader();
+  autosave();
+}
+
+/* ================= LOGIN FLOW ================= */
+let selectedClass = null;
+
+async function initLogin(){
+  const res = await callApi("getRoster", {});
+  const grid = document.getElementById("classGrid");
+  grid.innerHTML = "";
+  if(!res.ok || !res.data || Object.keys(res.data).length===0){
+    grid.innerHTML = "<p>Chưa có danh sách lớp. Vui lòng liên hệ giáo viên.</p>";
+    return;
+  }
+  Object.keys(res.data).sort().forEach(lop=>{
+    const btn = document.createElement("button");
+    btn.className = "choice-card"; btn.textContent = "🏫 " + lop;
+    btn.onclick = ()=>selectClass(lop, res.data[lop], btn);
+    grid.appendChild(btn);
+  });
+}
+
+function selectClass(lop, students, btnEl){
+  selectedClass = lop;
+  document.querySelectorAll("#classGrid .choice-card").forEach(b=>b.classList.remove("selected"));
+  btnEl.classList.add("selected");
+  const card = document.getElementById("studentPickCard");
+  card.classList.remove("hidden");
+  const grid = document.getElementById("studentGrid");
+  grid.innerHTML = "";
+  students.forEach(s=>{
+    const btn = document.createElement("button");
+    btn.className = "choice-card"; btn.textContent = "🙋 " + s.hoTen;
+    btn.onclick = ()=>selectStudent(s, btn);
+    grid.appendChild(btn);
+  });
+  document.getElementById("enterBtn").classList.add("hidden");
+}
+
+let pendingStudent = null;
+function selectStudent(s, btnEl){
+  pendingStudent = s;
+  document.querySelectorAll("#studentGrid .choice-card").forEach(b=>b.classList.remove("selected"));
+  btnEl.classList.add("selected");
+  document.getElementById("enterBtn").classList.remove("hidden");
+}
+
+document.getElementById("enterBtn").onclick = async ()=>{
+  if(!pendingStudent) return;
+  const res = await callApi("login", {studentId: pendingStudent.studentId});
+  if(!res.ok){ alert(res.error || "Không đăng nhập được."); return; }
+  applyStudentData(res.data);
+  sessionStorage.setItem("activeStudent", JSON.stringify({studentId: STATE.studentId}));
+  if(STATE.progress > 0 && !STATE.completed){
+    goToSection(STATE.currentSection);
+  } else {
+    goToSection(1);
+    renderSection1();
+  }
+  renderAllSections();
+};
+
+function applyStudentData(d){
+  STATE.studentId = d.StudentID; STATE.hoTen = d.HoTen; STATE.lop = d.Lop;
+  STATE.currentSection = Number(d.CurrentSection)||1;
+  STATE.progress = Number(d.Progress)||0;
+  STATE.score = Number(d.Score)||0;
+  STATE.xp = Number(d.XP)||0;
+  STATE.activeTimeSeconds = Number(d.ActiveTimeSeconds)||0;
+  STATE.completed = !!(d.Completed===true || d.Completed==="TRUE" || d.Completed==="true");
+  STATE.fastCompletion = !!(d.FastCompletion===true || d.FastCompletion==="TRUE");
+  updateHeader();
+}
+
+document.getElementById("resumeBtn").onclick = ()=>{ document.getElementById("enterBtn").click(); };
+
+document.getElementById("changeStudentBtn").onclick = async ()=>{
+  if(!confirm("Lưu tiến độ hiện tại và đổi sang học sinh khác?")) return;
+  if(STATE.studentId) await autosave();
+  sessionStorage.removeItem("activeStudent");
+  location.reload();
+};
+
+/* ================= SECTION 1 ================= */
+const CHANNEL_CARDS = [
+  {id:"email", label:"Email", zone:"internet"},
+  {id:"forum", label:"Diễn đàn", zone:"internet"},
+  {id:"social", label:"Mạng xã hội", zone:"internet"},
+  {id:"sms", label:"Tin nhắn", zone:"internet"},
+  {id:"letter", label:"Thư tay", zone:"offline"}
+];
+let dndSelected = null;
+let dndPlaced = {};
+
+function renderSection1(){
+  const src = document.getElementById("dndSource");
+  src.innerHTML = "";
+  CHANNEL_CARDS.forEach(c=>{
+    const chip = document.createElement("div");
+    chip.className = "dnd-chip"; chip.textContent = c.label; chip.draggable = true;
+    chip.dataset.id = c.id;
+    chip.onclick = ()=>{
+      if(dndPlaced[c.id]) return;
+      document.querySelectorAll(".dnd-chip").forEach(x=>x.classList.remove("selected"));
+      dndSelected = c.id; chip.classList.add("selected");
+    };
+    chip.addEventListener("dragstart", e=>{ e.dataTransfer.setData("text/plain", c.id); });
+    src.appendChild(chip);
+  });
+  ["zoneInternet","zoneOffline"].forEach(zoneElId=>{
+    const zoneEl = document.getElementById(zoneElId);
+    zoneEl.addEventListener("dragover", e=>{ e.preventDefault(); zoneEl.classList.add("drag-over"); });
+    zoneEl.addEventListener("dragleave", ()=> zoneEl.classList.remove("drag-over"));
+    zoneEl.addEventListener("drop", e=>{
+      e.preventDefault(); zoneEl.classList.remove("drag-over");
+      const id = e.dataTransfer.getData("text/plain");
+      placeChannel(id, zoneEl.dataset.zone);
+    });
+    zoneEl.onclick = ()=>{ if(dndSelected){ placeChannel(dndSelected, zoneEl.dataset.zone); dndSelected=null; } };
+  });
+
+  const infoList = document.getElementById("infoTypeList");
+  infoList.innerHTML = "";
+  [["text","📝 Văn bản"],["image","🖼 Hình ảnh"],["audio","🔊 Âm thanh"],["video","🎬 Video"],["file","📁 Tệp"]].forEach(([id,label])=>{
+    const item = document.createElement("div");
+    item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${label}</span>`;
+    item.onclick = ()=>{ item.classList.toggle("chosen"); checkInfoTypesDone(); };
+    item.dataset.id = id;
+    infoList.appendChild(item);
+  });
+}
+
+function placeChannel(id, zone){
+  if(dndPlaced[id]) return;
+  const card = CHANNEL_CARDS.find(c=>c.id===id);
+  dndPlaced[id] = zone;
+  const chip = [...document.querySelectorAll(".dnd-chip")].find(c=>c.dataset.id===id);
+  if(chip) chip.classList.add("placed");
+  const targetId = zone==="internet" ? "placedInternet" : "placedOffline";
+  const span = document.createElement("span");
+  span.className = "placed-chip"; span.textContent = card.label;
+  document.getElementById(targetId).appendChild(span);
+  const fb = document.getElementById("dndFeedback");
+  const correct = card.zone === zone;
+  fb.classList.add("show", "feedback");
+  fb.classList.toggle("good", correct); fb.classList.toggle("bad", !correct);
+  fb.textContent = correct ? "✓ Chính xác! 🌟" : "Chưa chính xác, em hãy xem lại gợi ý.";
+  addXp(correct?3:0);
+  logResponse("B4_CHANNEL_SORT", 1, "Kênh "+card.label+" thuộc vùng nào?", zone, correct);
+  if(Object.keys(dndPlaced).length === CHANNEL_CARDS.length){
+    checkSection1Done();
+  }
+}
+
+let infoTypesChecked = false;
+function checkInfoTypesDone(){
+  const chosen = [...document.querySelectorAll("#infoTypeList .option-item.chosen")].map(x=>x.dataset.id);
+  const fb = document.getElementById("infoTypeFeedback");
+  if(chosen.length>=1 && !infoTypesChecked){
+    infoTypesChecked = true;
+    fb.classList.add("show","feedback","good");
+    fb.textContent = "💡 Em đã phát hiện điểm quan trọng! Internet có thể truyền nhiều dạng thông tin.";
+    addXp(5);
+    logResponse("B4_INFO_TYPES", 1, "Các loại thông tin trao đổi trên Internet", chosen, true);
+  }
+  checkSection1Done();
+}
+
+function checkSection1Done(){
+  const allPlaced = Object.keys(dndPlaced).length === CHANNEL_CARDS.length;
+  document.getElementById("toSection2Btn").disabled = !(allPlaced && infoTypesChecked);
+}
+
+document.getElementById("toSection2Btn").onclick = ()=>{ goToSection(2); renderSection2(); };
+
+/* ================= SECTION 2 ================= */
+function renderSection2(){
+  const isSocialList = document.getElementById("isSocialList");
+  isSocialList.innerHTML = "";
+  ["Có, vì mọi người có thể tương tác, kết nối và chia sẻ với nhau","Không, vì đây chỉ là một trang tin tức"].forEach((label,i)=>{
+    const item = document.createElement("div");
+    item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${label}</span>`;
+    item.onclick = ()=>{
+      document.querySelectorAll("#isSocialList .option-item").forEach(x=>x.classList.remove("chosen","correct","incorrect"));
+      item.classList.add("chosen");
+      const correct = i===0;
+      item.classList.add(correct?"correct":"incorrect");
+      const fb = document.getElementById("isSocialFeedback");
+      fb.classList.add("show","feedback", correct?"good":"bad");
+      fb.textContent = correct ? "✓ Chính xác! Đây là mạng xã hội." : "Thử suy nghĩ thêm một lần nữa nhé.";
+      if(correct) addXp(5);
+      logResponse("B4_SOCIAL_FUNCTION", 2, "Đây có phải mạng xã hội không?", label, correct);
+    };
+    isSocialList.appendChild(item);
+  });
+
+  renderMatchGame();
+  renderRescueGame();
+}
+
+const MATCH_PAIRS = [
+  {fn:"Kết nối bạn bè", examples:["Nền tảng giao lưu bạn bè (như Facebook, Zalo)","Nền tảng chia sẻ video","Diễn đàn học tập"]},
+  {fn:"Chia sẻ video", examples:["Nền tảng chia sẻ video","Nền tảng giao lưu bạn bè (như Facebook, Zalo)","Diễn đàn học tập"]},
+  {fn:"Chia sẻ ảnh", examples:["Nền tảng chia sẻ ảnh (như Instagram)","Diễn đàn học tập","Nền tảng chia sẻ video"]},
+  {fn:"Thảo luận / học tập", examples:["Diễn đàn học tập, thảo luận","Nền tảng chia sẻ ảnh (như Instagram)","Nền tảng giao lưu bạn bè (như Facebook, Zalo)"]}
+];
+function renderMatchGame(){
+  const box = document.getElementById("matchGame");
+  box.innerHTML = "";
+  MATCH_PAIRS.forEach((pair,i)=>{
+    const row = document.createElement("div");
+    row.className = "match-row";
+    const opts = [...pair.examples];
+    row.innerHTML = `<b>${pair.fn}</b> ➜ <select data-i="${i}"><option value="">-- chọn ví dụ --</option>${opts.map(o=>`<option value="${o}">${o}</option>`).join("")}</select>`;
+    box.appendChild(row);
+  });
+}
+document.getElementById("checkMatchBtn").onclick = ()=>{
+  let correct=0;
+  document.querySelectorAll("#matchGame select").forEach(sel=>{
+    const i = Number(sel.dataset.i);
+    if(sel.value === MATCH_PAIRS[i].examples[0]) correct++;
+  });
+  const fb = document.getElementById("matchFeedback");
+  fb.classList.add("show","feedback", correct===MATCH_PAIRS.length?"good":"bad");
+  fb.textContent = correct===MATCH_PAIRS.length ? "🌟 Tốt lắm! Em ghép đúng tất cả!" : `Em ghép đúng ${correct}/${MATCH_PAIRS.length}. Thử lại nhé.`;
+  addXp(correct*3);
+  logResponse("B4_SOCIAL_FUNCTION_MATCH", 2, "Ghép chức năng MXH với ví dụ", correct, correct===MATCH_PAIRS.length);
+};
+
+const RESCUE_SITUATIONS = [
+  {text:"Cô giáo muốn gửi tài liệu cho cả lớp.", options:["Email lớp / nhóm lớp","Gọi điện từng bạn","Thư tay"], correct:0},
+  {text:"Minh muốn thảo luận cách giải bài lập trình với nhiều bạn cùng quan tâm.", options:["Diễn đàn học tập","Gửi thư tay","Đăng báo"], correct:0},
+  {text:"Lan muốn gửi một tấm ảnh cho bạn thân ngay lập tức.", options:["Tin nhắn / mạng xã hội","Gửi qua bưu điện","Radio"], correct:0},
+  {text:"Một câu lạc bộ muốn thông báo sự kiện tới nhiều người theo dõi.", options:["Đăng trên mạng xã hội của câu lạc bộ","Gọi điện từng người","Viết thư tay"], correct:0},
+  {text:"Em muốn hỏi bài một người bạn ở xa, cần trả lời nhanh.", options:["Nhắn tin/mạng xã hội","Gửi thư tay","Đợi gặp trực tiếp"], correct:0}
+];
+function renderRescueGame(){
+  const box = document.getElementById("rescueGame");
+  box.innerHTML = "";
+  RESCUE_SITUATIONS.forEach((sit, idx)=>{
+    const div = document.createElement("div");
+    div.className = "card tight"; div.style.marginBottom="10px";
+    div.innerHTML = `<p><b>Tình huống ${idx+1}:</b> ${sit.text}</p><div class="option-list" data-idx="${idx}"></div><div class="feedback" data-fb="${idx}"></div>`;
+    box.appendChild(div);
+    const list = div.querySelector(".option-list");
+    sit.options.forEach((opt,oi)=>{
+      const item = document.createElement("div");
+      item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${opt}</span>`;
+      item.onclick = ()=>{
+        if(item.dataset.answered) return;
+        list.querySelectorAll(".option-item").forEach(x=>x.dataset.answered="1");
+        const correct = oi===sit.correct;
+        item.classList.add(correct?"correct":"incorrect");
+        const fb = div.querySelector(`[data-fb="${idx}"]`);
+        fb.classList.add("show","feedback", correct?"good":"bad");
+        fb.textContent = correct ? "✓ Chính xác! +5 XP" : "Chưa chính xác, em hãy xem lại gợi ý.";
+        if(correct){ addXp(5); addScore(5); }
+        logResponse("B4_RESCUE_"+(idx+1), 2, sit.text, opt, correct);
+        maybeShowCheckpoint();
+      };
+      list.appendChild(item);
+    });
+  });
+}
+
+function maybeShowCheckpoint(){
+  const answered = document.querySelectorAll("#rescueGame .option-item[data-answered]").length / RESCUE_SITUATIONS[0].options.length;
+  if(answered >= RESCUE_SITUATIONS.length){
+    document.getElementById("checkpointCard").classList.remove("hidden");
+    renderCheckpoint();
+  }
+}
+
+const CHECKPOINT_QUESTIONS = [
+  {q:"Mạng xã hội là gì?", options:["Một cộng đồng trực tuyến nơi mọi người tương tác","Một loại virus máy tính","Một thiết bị phần cứng"], correct:0},
+  {q:"Kênh nào KHÔNG phải là kênh trao đổi thông tin trên Internet?", options:["Thư tay","Email","Mạng xã hội"], correct:0},
+  {q:"Trên Internet, ta có thể trao đổi loại thông tin nào?", options:["Văn bản, hình ảnh, âm thanh, video, tệp","Chỉ văn bản","Chỉ hình ảnh"], correct:0}
+];
+function renderCheckpoint(){
+  const box = document.getElementById("checkpointBox");
+  if(box.dataset.rendered) return;
+  box.dataset.rendered = "1";
+  CHECKPOINT_QUESTIONS.forEach((cq, idx)=>{
+    const div = document.createElement("div");
+    div.className = "card tight"; div.style.marginBottom="10px";
+    div.innerHTML = `<p><b>${idx+1}. ${cq.q}</b></p><div class="option-list"></div><div class="feedback"></div>`;
+    box.appendChild(div);
+    const list = div.querySelector(".option-list");
+    cq.options.forEach((opt,oi)=>{
+      const item = document.createElement("div");
+      item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${opt}</span>`;
+      item.onclick = ()=>{
+        if(item.dataset.answered) return;
+        list.querySelectorAll(".option-item").forEach(x=>x.dataset.answered="1");
+        const correct = oi===cq.correct;
+        item.classList.add(correct?"correct":"incorrect");
+        const fb = div.querySelector(".feedback");
+        fb.classList.add("show","feedback",correct?"good":"bad");
+        fb.textContent = correct ? "✓ Chính xác!" : "Chưa chính xác, em hãy xem lại gợi ý.";
+        if(correct){ addXp(5); addScore(5); }
+        logResponse("B4_CHECKPOINT_"+(idx+1), 2, cq.q, opt, correct);
+        checkAllCheckpointDone();
+      };
+      list.appendChild(item);
+    });
+  });
+}
+function checkAllCheckpointDone(){
+  const done = document.querySelectorAll("#checkpointBox .option-item[data-answered]").length / CHECKPOINT_QUESTIONS[0].options.length;
+  if(done >= CHECKPOINT_QUESTIONS.length){
+    document.getElementById("endOfTiet1").classList.remove("hidden");
+    STATE.week1Completed = true;
+    autosave();
+  }
+}
+document.getElementById("toSection3Btn").onclick = ()=>{ goToSection(3); renderSection3(); };
+
+/* ================= SECTION 3 ================= */
+const SITUATIONS = [
+  {title:"Tình huống 1", text:'Một tài khoản đăng: "Ngày mai trường cho nghỉ học!!!" — không có nguồn.',
+   options:["Chia sẻ ngay","Bình luận \"chắc chắn đúng\"","Kiểm tra nguồn chính thức","Gửi cho tất cả bạn bè"], correct:2,
+   explain:"Khi thông tin không rõ nguồn, việc đầu tiên nên làm là kiểm tra với nguồn chính thức (nhà trường) trước khi tin hay chia sẻ."},
+  {title:"Tình huống 2", text:"Một học sinh đăng ảnh của bạn khác kèm lời chế giễu.",
+   options:["Tham gia trêu chọc","Chia sẻ tiếp","Không tiếp tay và báo cho người lớn/giáo viên khi cần"], correct:2,
+   explain:"Không tham gia hay chia sẻ nội dung chế giễu, và báo cho người lớn đáng tin cậy khi cần thiết."},
+  {title:"Tình huống 3", text:"Một người lạ gửi lời mời kết bạn.",
+   options:["Chấp nhận ngay vì càng nhiều bạn càng vui","Cân nhắc danh tính, bối cảnh và thông tin trước khi kết nối","Chặn ngay lập tức mà không cần suy nghĩ"], correct:1,
+   explain:"Không phải mọi người lạ đều nguy hiểm, nhưng em nên cân nhắc kỹ trước khi kết nối với người mình chưa biết rõ."},
+  {title:"Tình huống 4", text:"Một bài đăng khiến em rất tức giận.",
+   options:["Đăng bình luận xúc phạm ngay","Dừng lại, đọc lại và phản hồi lịch sự","Chụp màn hình và chế giễu người khác"], correct:1,
+   explain:"Nên dừng lại, bình tĩnh suy nghĩ trước khi phản hồi một cách lịch sự."},
+  {title:"Tình huống 5", text:"Một thông tin gây sốc được chia sẻ rất nhiều. Thông tin được chia sẻ nhiều có đồng nghĩa chắc chắn đúng không?",
+   options:["Có, chia sẻ nhiều nghĩa là đúng","Không, cần kiểm chứng nguồn trước khi tin"], correct:1,
+   explain:"Số lượt chia sẻ không đảm bảo tính chính xác của thông tin — luôn cần kiểm chứng nguồn."}
+];
+function renderSection3(){
+  const box = document.getElementById("situationsBox");
+  if(box.dataset.rendered) return;
+  box.dataset.rendered = "1";
+  SITUATIONS.forEach((sit, idx)=>{
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<div class="pill">${sit.title}</div><p>${sit.text}</p><div class="option-list"></div><div class="feedback"></div>`;
+    box.appendChild(div);
+    const list = div.querySelector(".option-list");
+    sit.options.forEach((opt,oi)=>{
+      const item = document.createElement("div");
+      item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${opt}</span>`;
+      item.onclick = ()=>{
+        if(item.dataset.answered) return;
+        list.querySelectorAll(".option-item").forEach(x=>x.dataset.answered="1");
+        const correct = oi===sit.correct;
+        item.classList.add(correct?"correct":"incorrect");
+        const fb = div.querySelector(".feedback");
+        fb.classList.add("show","feedback",correct?"good":"bad");
+        fb.textContent = (correct?"✓ Chính xác! ":"Thử suy nghĩ thêm một lần nữa nhé. ") + sit.explain;
+        if(correct){ addXp(8); addScore(8); }
+        logResponse("B4_SITUATION_"+(idx+1), 3, sit.text, opt, correct);
+        checkAllSituationsDone();
+      };
+      list.appendChild(item);
+    });
+  });
+}
+function checkAllSituationsDone(){
+  const perQ = SITUATIONS.map(s=>s.options.length);
+  const answered = document.querySelectorAll("#situationsBox .option-item[data-answered]").length;
+  const total = perQ.reduce((a,b)=>a+b,0);
+  if(answered >= total){ document.getElementById("toSection4Btn").classList.remove("hidden"); }
+}
+document.getElementById("toSection4Btn").onclick = ()=>{ goToSection(4); renderSection4(); };
+
+/* ================= SECTION 4 ================= */
+function renderSection4(){
+  document.querySelectorAll(".lab-tab").forEach(tab=>{
+    tab.onclick = ()=>{
+      document.querySelectorAll(".lab-tab").forEach(t=>t.classList.remove("active"));
+      document.querySelectorAll(".lab-panel").forEach(p=>p.classList.remove("active"));
+      tab.classList.add("active");
+      document.getElementById(tab.dataset.tab).classList.add("active");
+    };
+  });
+  document.querySelectorAll("[data-done]").forEach(btn=>{
+    btn.onclick = ()=>{
+      const next = "lab" + (Number(btn.dataset.done.replace("lab",""))+1);
+      const nextTab = document.querySelector(`.lab-tab[data-tab="${next}"]`);
+      if(nextTab) nextTab.click();
+    };
+  });
+
+  const avatarRow = document.getElementById("avatarRow");
+  if(!avatarRow.dataset.rendered){
+    avatarRow.dataset.rendered = "1";
+    ["🧑","👩","🦸","🐱","🐶","🦊"].forEach(a=>{
+      const btn = document.createElement("button");
+      btn.className = "avatar-choice"; btn.textContent = a;
+      btn.onclick = ()=>{
+        document.querySelectorAll(".avatar-choice").forEach(x=>x.classList.remove("selected"));
+        btn.classList.add("selected");
+        labProfile.avatar = a;
+        document.getElementById("labDisplayName").textContent = a + " " + STATE.hoTen;
+        logResponse("B4_SOCIAL_LAB_PROFILE", 4, "Chọn avatar", a, true);
+      };
+      avatarRow.appendChild(btn);
+    });
+  }
+
+  const postArea = document.getElementById("postText");
+  postArea.oninput = ()=>{ document.getElementById("postCount").textContent = postArea.value.length; };
+  document.getElementById("postSubmitBtn").onclick = ()=>{
+    const val = postArea.value.trim();
+    if(!val){ alert("Em hãy viết nội dung trước khi đăng nhé."); return; }
+    const feed = document.getElementById("postFeed");
+    const post = document.createElement("div");
+    post.className = "mxh-post";
+    post.innerHTML = `<b>${labProfile.avatar||"🙂"} ${STATE.hoTen}</b>: ${val}<div class="reacts"><span>❤️ 0</span><span>💬 0</span><span>↗️ 0</span></div>`;
+    feed.prepend(post);
+    postArea.value = ""; document.getElementById("postCount").textContent = "0";
+    addXp(10); addScore(10);
+    logResponse("B4_SOCIAL_LAB_POST", 4, "Bài đăng mẹo học tập", val, true);
+  };
+
+  const badWords = ["ngu","dốt","xấu xí","đồ ngốc"];
+  document.getElementById("commentSubmitBtn").onclick = ()=>{
+    const val = document.getElementById("commentText").value.trim();
+    const fb = document.getElementById("commentFeedback");
+    const hasBad = badWords.some(w=>val.toLowerCase().includes(w));
+    const okLength = val.length >= 8;
+    const good = okLength && !hasBad;
+    fb.classList.add("show","feedback", good?"good":"bad");
+    fb.textContent = good ? "🌟 Tốt lắm! Bình luận rất tích cực và lịch sự." : (hasBad ? "Bình luận có từ ngữ chưa phù hợp, em hãy viết lại nhé." : "Em hãy viết bình luận dài hơn một chút và mang tính động viên.");
+    if(good){ addXp(8); addScore(8); }
+    logResponse("B4_SOCIAL_LAB_COMMENT", 4, "Bình luận tích cực", val, good);
+  };
+
+  const friendList = document.getElementById("friendList");
+  if(!friendList.dataset.rendered){
+    friendList.dataset.rendered = "1";
+    [["AN — bạn cùng lớp",true],["MINH — bạn của bạn, có thông tin rõ ràng",true],["UNKNOWN123 — người lạ, không có thông tin",false]].forEach(([label,ok])=>{
+      const item = document.createElement("div");
+      item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${label}</span>`;
+      item.onclick = ()=>{
+        item.classList.toggle("chosen");
+        const chosen = [...friendList.querySelectorAll(".chosen")].length;
+        const fb = document.getElementById("friendFeedback");
+        fb.classList.add("show","feedback","good");
+        fb.textContent = "💡 Hãy luôn cân nhắc danh tính, bối cảnh và thông tin sẵn có trước khi kết nối với ai đó.";
+        logResponse("B4_SOCIAL_LAB_FRIEND", 4, "Ai nên cân nhắc kết nối?", label, ok);
+        if(chosen>0) addXp(3);
+      };
+      friendList.appendChild(item);
+    });
+  }
+
+  const shareTasks = document.getElementById("shareTasks");
+  if(!shareTasks.dataset.rendered){
+    shareTasks.dataset.rendered = "1";
+    const posts = [
+      {text:"Thông báo từ website chính thức của trường.", best:"CHIA SẺ", explain:"Nguồn chính thức và đáng tin cậy, có thể chia sẻ."},
+      {text:"Tin giật gân, không rõ nguồn.", best:"KIỂM TRA THÊM", explain:"Cần kiểm chứng nguồn trước khi quyết định."},
+      {text:"Mẹo học tập có nguồn rõ ràng.", best:"CHIA SẺ", explain:"Thông tin hữu ích và có nguồn, có thể chia sẻ."},
+      {text:"Nội dung chế giễu bạn học.", best:"KHÔNG CHIA SẺ", explain:"Không nên lan truyền nội dung gây tổn thương người khác."}
+    ];
+    posts.forEach((p,idx)=>{
+      const div = document.createElement("div");
+      div.className = "card tight"; div.style.marginBottom="10px";
+      div.innerHTML = `<p>${idx+1}. ${p.text}</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary" data-choice="CHIA SẺ">CHIA SẺ</button>
+          <button class="btn btn-secondary" data-choice="KIỂM TRA THÊM">KIỂM TRA THÊM</button>
+          <button class="btn btn-secondary" data-choice="KHÔNG CHIA SẺ">KHÔNG CHIA SẺ</button>
+        </div>
+        <div class="feedback"></div>`;
+      shareTasks.appendChild(div);
+      div.querySelectorAll("[data-choice]").forEach(btn=>{
+        btn.onclick = ()=>{
+          if(div.dataset.answered) return;
+          div.dataset.answered = "1";
+          const correct = btn.dataset.choice === p.best;
+          const fb = div.querySelector(".feedback");
+          fb.classList.add("show","feedback", correct?"good":"bad");
+          fb.textContent = (correct?"✓ Chính xác! ":"Gợi ý: ") + p.explain;
+          if(correct){ addXp(6); addScore(6); }
+          logResponse("B4_SOCIAL_LAB_SHARE_"+(idx+1), 4, p.text, btn.dataset.choice, correct);
+          checkSection4GameUnlock();
+        };
+      });
+    });
+  }
+
+  renderFinalGame();
+}
+
+const FINAL_GAME = [
+  {group:"KÊNH TRAO ĐỔI", q:"Đâu là kênh trao đổi thông tin trên Internet?", options:["Email","Thư tay"], correct:0},
+  {group:"CHỨC NĂNG MXH", q:"Đăng ảnh và nhận bình luận là chức năng của?", options:["Mạng xã hội","Máy in"], correct:0},
+  {group:"THÔNG TIN SAI", q:"Tin không rõ nguồn, được chia sẻ nhiều — điều này có nghĩa là?", options:["Chưa chắc đã đúng","Chắc chắn đúng"], correct:0},
+  {group:"GIAO TIẾP LỊCH SỰ", q:"Khi tức giận vì một bài đăng, em nên?", options:["Bình tĩnh rồi phản hồi lịch sự","Xúc phạm ngay lập tức"], correct:0},
+  {group:"CHIA SẺ THÔNG TIN", q:"Trước khi chia sẻ tin, nên?", options:["Kiểm tra nguồn","Chia sẻ ngay cho nhanh"], correct:0},
+  {group:"KẾT NỐI TRỰC TUYẾN", q:"Trước khi kết bạn với người lạ, nên?", options:["Cân nhắc thông tin, bối cảnh","Kết bạn ngay không cần nghĩ"], correct:0},
+  {group:"KÊNH TRAO ĐỔI", q:"Diễn đàn học tập dùng để?", options:["Thảo luận, chia sẻ kiến thức","Gửi thư giấy"], correct:0},
+  {group:"CHỨC NĂNG MXH", q:"Mạng xã hội KHÔNG có chức năng nào sau đây?", options:["In tài liệu trực tiếp","Nhắn tin"], correct:0}
+];
+let finalGameIdx = 0, finalGameAttempts = {};
+function renderFinalGame(){
+  const box = document.getElementById("finalGame");
+  if(box.dataset.rendered) return;
+  box.dataset.rendered = "1";
+  showFinalGameQuestion();
+}
+function showFinalGameQuestion(){
+  const box = document.getElementById("finalGame");
+  if(finalGameIdx >= FINAL_GAME.length){
+    box.innerHTML = "<p>✓ Hoàn thành thử thách! 🛡️ Em đã trở thành Công dân số thông minh.</p>";
+    document.getElementById("miniProgress").textContent = FINAL_GAME.length+"/"+FINAL_GAME.length;
+    document.getElementById("toSection5Btn").classList.remove("hidden");
+    return;
+  }
+  const q = FINAL_GAME[finalGameIdx];
+  document.getElementById("miniProgress").textContent = finalGameIdx+"/"+FINAL_GAME.length;
+  box.innerHTML = `<div class="pill">${q.group}</div><p><b>${q.q}</b></p><div class="option-list"></div><div class="feedback"></div>`;
+  const list = box.querySelector(".option-list");
+  const fb = box.querySelector(".feedback");
+  q.options.forEach((opt,oi)=>{
+    const item = document.createElement("div");
+    item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${opt}</span>`;
+    item.onclick = ()=>{
+      const attempts = (finalGameAttempts[finalGameIdx]||0)+1;
+      finalGameAttempts[finalGameIdx] = attempts;
+      const correct = oi===q.correct;
+      if(correct){
+        item.classList.add("correct");
+        fb.classList.add("show","feedback","good");
+        fb.textContent = "🌟 Tốt lắm!";
+        addXp(5); addScore(5);
+        logResponse("B4_FINAL_GAME_"+(finalGameIdx+1), 4, q.q, opt, true, attempts);
+        setTimeout(()=>{ finalGameIdx++; showFinalGameQuestion(); }, 700);
+      } else if(attempts===1){
+        item.classList.add("incorrect");
+        fb.classList.add("show","feedback","bad");
+        fb.textContent = "Thử suy nghĩ thêm một lần nữa nhé — gợi ý: đọc lại phần liên quan ở trên.";
+      } else {
+        item.classList.add("incorrect");
+        logResponse("B4_FINAL_GAME_"+(finalGameIdx+1), 4, q.q, opt, false, attempts);
+        setTimeout(()=>{ finalGameIdx++; showFinalGameQuestion(); }, 900);
+      }
+    };
+    list.appendChild(item);
+  });
+}
+function checkSection4GameUnlock(){ /* game always available; kept for structure */ }
+document.getElementById("toSection5Btn").onclick = ()=>{
+  maybeFastCompletionCheck(()=>{ goToSection(5); renderSection5(); });
+};
+
+/* ================= FAST COMPLETION CHECK ================= */
+function maybeFastCompletionCheck(cb){
+  if(STATE.activeTimeSeconds < 600 && !STATE.fastCompletion){
+    document.getElementById("fastModal").classList.add("show");
+    document.getElementById("fastReviewBtn").onclick = ()=>{
+      document.getElementById("fastModal").classList.remove("show");
+      goToSection(3);
+    };
+    document.getElementById("fastContinueBtn").onclick = ()=>{
+      STATE.fastCompletion = true;
+      document.getElementById("fastModal").classList.remove("show");
+      autosave();
+      cb();
+    };
+  } else { cb(); }
+}
+
+/* ================= SECTION 5 : EXIT TICKET ================= */
+function renderSection5(){
+  const q2 = document.getElementById("etQ2List");
+  if(!q2.dataset.rendered){
+    q2.dataset.rendered = "1";
+    ["Tạo hồ sơ","Kết nối bạn bè","Đăng nội dung","Chia sẻ","Bình luận","Nhắn tin","Thảo luận"].forEach(opt=>{
+      const item = document.createElement("div");
+      item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${opt}</span>`;
+      item.onclick = ()=> item.classList.toggle("chosen");
+      q2.appendChild(item);
+    });
+  }
+  const q3 = document.getElementById("etQ3List");
+  if(!q3.dataset.rendered){
+    q3.dataset.rendered = "1";
+    ["Chia sẻ ngay cho nhiều người biết","Kiểm tra nguồn chính thức trước khi chia sẻ","Bình luận rằng chắc chắn đúng"].forEach(opt=>{
+      const item = document.createElement("div");
+      item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${opt}</span>`;
+      item.onclick = ()=>{ q3.querySelectorAll(".option-item").forEach(x=>x.classList.remove("chosen")); item.classList.add("chosen"); };
+      q3.appendChild(item);
+    });
+  }
+  const q4 = document.getElementById("etQ4List");
+  if(!q4.dataset.rendered){
+    q4.dataset.rendered = "1";
+    ["1 😕","2","3 😐","4","5 😀"].forEach((opt,i)=>{
+      const item = document.createElement("div");
+      item.className = "option-item"; item.innerHTML = `<span class="chk"></span><span>${opt}</span>`;
+      item.dataset.val = i+1;
+      item.onclick = ()=>{ q4.querySelectorAll(".option-item").forEach(x=>x.classList.remove("chosen")); item.classList.add("chosen"); };
+      q4.appendChild(item);
+    });
+  }
+}
+
+document.getElementById("submitExitBtn").onclick = async ()=>{
+  const channels = document.getElementById("etQ1").value.trim();
+  const funcs = [...document.querySelectorAll("#etQ2List .chosen span:last-child")].map(x=>x.textContent);
+  const verify = document.querySelector("#etQ3List .chosen span:last-child");
+  const understanding = document.querySelector("#etQ4List .chosen");
+  const question = document.getElementById("etQ5").value.trim();
+  if(!channels || funcs.length===0 || !verify || !understanding){
+    alert("Em hãy trả lời đầy đủ các câu hỏi (trừ câu 5 có thể để trống) trước khi nộp nhé.");
+    return;
+  }
+  await callApi("saveExitTicket", {
+    studentId: STATE.studentId, hoTen: STATE.hoTen, lop: STATE.lop,
+    channels: channels.split(/[,;]/).map(s=>s.trim()).filter(Boolean),
+    socialNetworkFunctions: funcs,
+    verifyBeforeShare: verify.textContent,
+    understanding: understanding.dataset.val,
+    question, mindmapChoice: "SKIPPED",
+    durationSeconds: Math.round((Date.now()-STATE.startTs)/1000)
+  });
+  addXp(15);
+  document.getElementById("submitExitBtn").disabled = true;
+  document.getElementById("mindmapCard").classList.remove("hidden");
+  window.scrollTo({top: document.body.scrollHeight, behavior:"smooth"});
+};
+
+document.getElementById("viewMindmapBtn").onclick = ()=>{
+  document.getElementById("mindmapGuide").classList.remove("hidden");
+};
+document.getElementById("skipMindmapBtn").onclick = ()=> finishLesson("SKIPPED");
+document.getElementById("doneMindmapBtn").onclick = ()=> finishLesson("COMPLETED_SELF_REPORTED");
+
+async function finishLesson(mindmapChoice){
+  await callApi("saveExitTicket", {
+    studentId: STATE.studentId, hoTen: STATE.hoTen, lop: STATE.lop,
+    mindmapChoice, durationSeconds: Math.round((Date.now()-STATE.startTs)/1000),
+    channels: [], socialNetworkFunctions: [], verifyBeforeShare:"", understanding:"", question:""
+  });
+  STATE.completed = true; STATE.progress = 100;
+  await autosave();
+  document.getElementById("mindmapCard").classList.add("hidden");
+  const finalCard = document.getElementById("finalDoneCard");
+  finalCard.classList.remove("hidden");
+  document.getElementById("finalSummary").textContent = `Em đã đạt ${STATE.xp} XP và điểm ${STATE.score}. Rất tốt!`;
+  const badges = [];
+  badges.push("📨 Người kết nối");
+  if(STATE.score >= 30) badges.push("🔎 Người kiểm chứng");
+  if(STATE.completed) badges.push("🛡 Công dân số thông minh");
+  document.getElementById("badgeRow").textContent = badges.join("  ");
+  window.scrollTo({top: document.body.scrollHeight, behavior:"smooth"});
+}
+
+/* ================= RENDER ALL (idempotent init) ================= */
+function renderAllSections(){
+  renderSection1();
+}
+
+/* ================= TEACHER MODE ================= */
+document.getElementById("openTeacherModeBtn").onclick = ()=>{
+  document.getElementById("teacherLoginModal").classList.add("show");
+};
+document.getElementById("teacherLoginCancel").onclick = ()=>{
+  document.getElementById("teacherLoginModal").classList.remove("show");
+};
+document.getElementById("teacherLoginSubmit").onclick = async ()=>{
+  const code = document.getElementById("teacherCodeInput").value.trim();
+  const res = await callApi("teacherLogin", {code});
+  const fb = document.getElementById("teacherLoginFeedback");
+  if(res.ok){
+    TEACHER_AUTH = true;
+    window.__teacherCode = code;
+    document.getElementById("teacherLoginModal").classList.remove("show");
+    showScreen("teacher");
+    loadTeacherDashboard();
+  } else {
+    fb.classList.add("show","feedback","bad");
+    fb.textContent = res.error || "Sai mã giáo viên.";
+  }
+};
+document.getElementById("teacherExitBtn").onclick = ()=>{ showScreen("login"); };
+document.getElementById("teacherRefreshBtn").onclick = loadTeacherDashboard;
+document.getElementById("teacherClassFilter").onchange = loadTeacherDashboard;
+
+async function loadTeacherDashboard(){
+  const lop = document.getElementById("teacherClassFilter").value;
+  const res = await callApi("getTeacherDashboard", {code: window.__teacherCode, lop});
+  if(!res.ok){ alert(res.error); return; }
+  const d = res.data;
+  const classFilter = document.getElementById("teacherClassFilter");
+  const currentVal = classFilter.value;
+  classFilter.innerHTML = '<option value="">Tất cả</option>' + d.classes.map(c=>`<option value="${c}">${c}</option>`).join("");
+  classFilter.value = currentVal;
+
+  const tbody = document.getElementById("teacherTableBody");
+  tbody.innerHTML = "";
+  const resetSelect = document.getElementById("resetStudentSelect");
+  resetSelect.innerHTML = '<option value="">-- Chọn học sinh --</option>';
+  d.students.forEach(s=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${s.HoTen}</td><td>${s.Lop}</td><td>${s.Progress}%</td><td>${Math.round((s.ActiveTimeSeconds||0)/60)} phút</td>
+      <td>${s.Score}</td><td>${s.XP}</td><td>${(s.Completed===true||s.Completed==="TRUE")?"✅":"—"}</td>
+      <td>${(s.FastCompletion===true||s.FastCompletion==="TRUE")?"⚡ nhanh":""}</td>`;
+    tbody.appendChild(tr);
+    const opt = document.createElement("option");
+    opt.value = s.StudentID; opt.textContent = s.HoTen + " (" + s.Lop + ")";
+    resetSelect.appendChild(opt);
+  });
+
+  document.getElementById("statExitCount").textContent = d.exitTicketCount;
+  document.getElementById("statVerifyRate").textContent = d.verifyCorrectRate + "%";
+  document.getElementById("statFast").textContent = d.fastCompletionCount;
+
+  const bars = document.getElementById("understandingBars");
+  bars.innerHTML = "";
+  const maxV = Math.max(1, ...Object.values(d.understandingDist));
+  ["1","2","3","4","5"].forEach(k=>{
+    const v = d.understandingDist[k]||0;
+    const row = document.createElement("div");
+    row.className = "bar-row";
+    row.innerHTML = `<span class="lbl">Mức ${k}</span><div class="bar-shell"><div class="bar-fill" style="width:${(v/maxV*100)}%"></div></div><span>${v}</span>`;
+    bars.appendChild(row);
+  });
+
+  const qBox = document.getElementById("studentQuestions");
+  qBox.innerHTML = d.questions.length ? d.questions.map(q=>`<p>💬 <b>${q.hoTen}</b> (${q.lop}): ${q.question}</p>`).join("") : "<p>Chưa có câu hỏi nào.</p>";
+}
+
+document.getElementById("resetProgressBtn").onclick = async ()=>{
+  const studentId = document.getElementById("resetStudentSelect").value;
+  if(!studentId){ alert("Hãy chọn học sinh."); return; }
+  if(!confirm("Xác nhận lần 1: reset toàn bộ tiến độ của học sinh này?")) return;
+  const code = prompt("Nhập lại mã giáo viên để xác nhận lần 2:");
+  if(code !== window.__teacherCode){ alert("Sai mã giáo viên."); return; }
+  const res = await callApi("resetStudentProgress", {code, studentId});
+  if(res.ok){ alert("Đã reset tiến độ."); loadTeacherDashboard(); }
+  else alert(res.error);
+};
+
+/* ================= RESUME ON LOAD ================= */
+window.addEventListener("beforeunload", ()=>{ if(STATE.studentId) navigator.sendBeacon && autosave(); });
+
+(async function init(){
+  updateHeader();
+  await initLogin();
+})();
+</script>
+</body>
+</html>
