@@ -622,11 +622,7 @@ const DemoDB = {
   ensureRoster(){
     if(!localStorage.getItem(this.key("roster"))){
       const roster = [
-        {StudentID:"HS001","Họ tên":"Nguyễn Văn An","Lớp":"7A1","Năm học":CONFIG.schoolYear,Active:true},
-        {StudentID:"HS002","Họ tên":"Trần Thị Bình","Lớp":"7A1","Năm học":CONFIG.schoolYear,Active:true},
-        {StudentID:"HS003","Họ tên":"Lê Văn Cường","Lớp":"7A1","Năm học":CONFIG.schoolYear,Active:true},
-        {StudentID:"HS004","Họ tên":"Phạm Thị Duyên","Lớp":"7A2","Năm học":CONFIG.schoolYear,Active:true},
-        {StudentID:"HS005","Họ tên":"Hoàng Văn Em","Lớp":"7A2","Năm học":CONFIG.schoolYear,Active:true}
+      
       ];
       this.set("roster", roster);
     }
